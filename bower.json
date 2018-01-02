@@ -1,0 +1,24 @@
+{
+  "name": "DenverAreaMap",
+  "description": "Proof of concept project by robotoART for the Full Stack Web Developer degree of Udacity.",
+  "main": "",
+  "authors": [
+    "robotoART https://github.com/robotoART"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/robotoART/DenverAreaMap",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "font-awesome": "fontawesome#^4.7.0",
+    "jquery": "^3.2.1",
+    "knockout": "knockoutjs#^3.4.2",
+    "less": "^2.7.3"
+  }
+}

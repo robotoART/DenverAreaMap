@@ -77,6 +77,7 @@ var ViewModel = function() {
     });
     var bounds = new google.maps.LatLngBounds();
     var location;
+    var marker;
     var userinput;
 
     // places list model to view
@@ -97,6 +98,56 @@ var ViewModel = function() {
       bounds.extend(marker.position);
       placeData.marker = marker;
 
+      // nonGoogle API calls for infoWindows data
+      var foursqUrl = 'https://api.foursquare.com/v2/venues/search';
+      var foursqCI = 'L3E1LXCTPJ4ZF04M0Q4BSYL2D05ERO1CV2KXPQDLXBD2UMSU';
+      var foursqCS = 'SEJXZVU250INZKAXMOTM232HX14WPGGCCSB0LEEXCEEG2U2G';
+      var foursqV = '20170801';
+      var foursqphotoUrl = 'https://api.foursquare.com/v2/venues/';
+      var foursqPicSize = '200x200';
+      $.ajax({
+        url: foursqUrl,
+        dataType: 'json',
+        data: 'limit=1' +
+          '&ll='+ placeData.location().lat +
+          ',' + placeData.location().lng +
+          '&query=' + placeData.title() +
+          '&client_id=' + foursqCI +
+          '&client_secret=' + foursqCS + '&v=' + foursqV,
+        async: true,
+        success: function(response) {
+          var foursqVenueName = response.response.venues[0].name;
+          var foursqVenueId = response.response.venues[0].id;
+          $.ajax({
+            url: foursqphotoUrl + foursqVenueId + '/photos',
+            dataType: 'json',
+            data: 'limit=1' +
+              '&ll='+ placeData.location().lat +
+              ',' + placeData.location().lng +
+              '&query=' + placeData.title() +
+              '&client_id=' + foursqCI +
+              '&client_secret=' + foursqCS + '&v=' + foursqV,
+            async: true,
+            success: function(picresponse) {
+              var foursqprefix = picresponse.response.photos.items[0].prefix;
+              var foursqsuffix = picresponse.response.photos.items[0].suffix;
+              var fourpic = foursqprefix + foursqPicSize + foursqsuffix;
+              var venueUrl = 'https://foursquare.com/v/' + foursqVenueId + '?ref='+ foursqCI;
+              placeData.contentString = '<div class="col-xs-12"><h4>' + foursqVenueName + '</h4></div>' +
+              '<div class="col-xs-12"><img class="col-xs-12" src=' + fourpic + '></div>' +
+              '<div class="col-xs-12"><a href="' + venueUrl + '">More Details</a><div>' +
+              '<div class="col-xs-12"><p>powered by Foursquare</p><div>';
+            },
+            error: function(e) {
+              placeData.contentString = '<p>Foursquare Photos not responding at this time</p>';
+            }
+          });
+        },
+        error: function(e) {
+          placeData.contentString = '<p>Foursquare not responding at this time</p>';
+        }
+      });
+
       // create infoWindows for markers
       google.maps.event.addListener(placeData.marker, 'click', function() {
         infowindow.open(map, this);
@@ -104,19 +155,11 @@ var ViewModel = function() {
         setTimeout(function() {
           placeData.marker.setAnimation(null);
         }, 2100);
-        if (typeof placeData.contentString == "string"){
-          infowindow.setContent(placeData.contentString);
-        } else {
-          infowindow.setContent('<p>There was an error with info window url string</p>');
-        };
+
+        infowindow.setContent(placeData.contentString);
       });
     });
     map.fitBounds(bounds);
-
-    // method to make sure markers fit on screen when window resizes
-    google.maps.event.addDomListener(window, 'resize', function() {
-      map.fitBounds(bounds);
-    });
 
     // event trigger function for a clicked place from the list
     self.viewPlace = function(clickedPlace) {
@@ -153,6 +196,3 @@ var ViewModel = function() {
 };
 
 var mapError = ko.observable(false);
-var googleMapError = () => {
-  document.getElementById("map").innerHTML = "<h1>There was an unknown problem loading the google map.</h1>";
-};

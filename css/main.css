@@ -13,3 +13,9 @@ h1 {
 .container, .row, #map {
   height: 100%;
 }
+
+.navbar-brand, .navbar-brand:hover, .navbar-brand:focus {
+  cursor: default;
+  background-color: transparent;
+  color: inherit;
+}
