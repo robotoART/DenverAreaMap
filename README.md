@@ -60,4 +60,13 @@ Using a terminal or command prompt change into the **DenverAreaMap** directory a
 
     bower install
 
-Now you can simply open the **"index.html"** in your favorite browser. The app will open a Google Maps API of the Denver, CO area with a handful of markers to some great places to visit within an hour of the city. Simply type in a few key letters of a place to see if it's on the list. Thanks for looking.
+Now you can run the app on localhost:8080 by setting up a local server with Python.
+
+* Python 3.x :    python -m http.server 8080
+* Python 2.x :    python -m SimpleHTTPServer 8080
+
+Google Chrome is the preffered browser to run this app.
+
+The app will open a Google Maps API of the Denver, CO area with a handful of markers to some great places to visit within an hour of the city. Simply type in a few key letters of a place to see if it's on the list.
+
+Thanks for looking.

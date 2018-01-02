@@ -155,11 +155,19 @@ var ViewModel = function() {
         setTimeout(function() {
           placeData.marker.setAnimation(null);
         }, 2100);
-
-        infowindow.setContent(placeData.contentString);
+        if (typeof placeData.contentString == "string"){
+          infowindow.setContent(placeData.contentString);
+        } else {
+          infowindow.setContent('<p>There was an error with info window url string</p>');
+        };
       });
     });
     map.fitBounds(bounds);
+
+    // method to make sure markers fit on screen when window resizes
+    google.maps.event.addDomListener(window, 'resize', function() {
+      map.fitBounds(bounds);
+    });
 
     // event trigger function for a clicked place from the list
     self.viewPlace = function(clickedPlace) {
@@ -196,3 +204,6 @@ var ViewModel = function() {
 };
 
 var mapError = ko.observable(false);
+var googleMapError = () => {
+  document.getElementById("map").innerHTML = "<h1>There was an unknown problem loading the google map.</h1>";
+};
