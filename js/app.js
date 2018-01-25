@@ -85,6 +85,39 @@ var ViewModel = function() {
         self.placesList.push(new Place(placeItem));
     });
 
+    // map markers & infowindows models to view
+    self.placesList().forEach(function(placeData) {
+      // create the markers from the model
+      marker = new google.maps.Marker({
+        title: placeData.title(),
+        position: new google.maps.LatLng(placeData.location()),
+        map: map,
+        animation: google.maps.Animation.DROP
+      });
+      bounds.extend(marker.position);
+      placeData.marker = marker;
+
+      // create infoWindows for markers
+      google.maps.event.addListener(placeData.marker, 'click', function() {
+        infowindow.open(map, this);
+        placeData.marker.setAnimation(google.maps.Animation.BOUNCE);
+        setTimeout(function() {
+          placeData.marker.setAnimation(null);
+        }, 2100);
+        if (typeof placeData.contentString == "string"){
+          infowindow.setContent(placeData.contentString);
+        } else {
+          infowindow.setContent('<p>There was an error with info window url string</p>');
+        };
+      });
+    });
+    map.fitBounds(bounds);
+
+    // method to make sure markers fit on screen when window resizes
+    google.maps.event.addDomListener(window, 'resize', function() {
+      map.fitBounds(bounds);
+    });
+
     // search filter results observableArray
     self.visiblePlace = ko.observableArray();
 
