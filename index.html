@@ -15,10 +15,23 @@
         <div class="container">
             <div class="row">
                 <div class="navbar navbar-inverse col-sm-4" role="navigation">
-                <div class="navbar-header">
-                <div class="navbar-brand">Denver Area Places</div>
-                </button>
-                </div>
+                    <div class="navbar-header">
+                    <div class="navbar-brand">Denver Area Places</div>
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle Navigation</span>
+                        <span class="icon-bar top-bar"></span>
+                        <span class="icon-bar mid-bar"></span>
+                        <span class="icon-bar bot-bar"></span>
+                    </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <input class="col-xs-12" type="search" name="PlacesFilter" placeholder="Search" data-bind="textInput: userFilter, event: {keyup: filterPlaces}">
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav" data-bind='foreach: visiblePlace'>
+                            <li id="place-name"><a href="#" data-bind="text: title, click: $parent.viewPlace"></a></li>
+                        </ul>
+                    </div>
                 </div>
                 <div class="col-sm-8" data-bind="visible: mapError"><h1>There was a problem loading Denver Area Maps App :-/ Sorry about the bummer, but please try again later.</h1></div>
                 <div class="col-sm-8" id="map"></div>
