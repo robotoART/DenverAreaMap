@@ -118,6 +118,11 @@ var ViewModel = function() {
       map.fitBounds(bounds);
     });
 
+    // event trigger function for a clicked place from the list
+    self.viewPlace = function(clickedPlace) {
+      google.maps.event.trigger(clickedPlace.marker, 'click');
+    }
+
     // search filter results observableArray
     self.visiblePlace = ko.observableArray();
 
