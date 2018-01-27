@@ -1,6 +1,7 @@
 # Denver Area Map
 by robotoART
 
+![alt text](./images/DenverAreaMapApp.JPG)
 ### Objective of this sample application
 Using a basic sample Google Maps API project from Udacity's GitHub pages demonstrate the fundamentals of creating a single page Web application. Discover more about JSON endpoints using jQuery AJAX asynchronously, and how to efficiently adapt when an applications scope or requirements change. Learn about Organizational Libraries & Frameworks like Knockout.js, Cross-Origin Resource Sharing (CORS), separation of concerns principles such as Model View ViewModel (MVVM), and implementation of third party APIs including Foursquare, Yelp, Instagram, and others found in this project.
 
@@ -52,10 +53,10 @@ From the terminal, run:
 
 This will give you a directory named **DenverAreaMap** with a **index.html** file, all css & javascript files, and a bower.json file for installing all of the necessary components to run and customize the project.
 
-## Running the Denver Area Map App 
+## Running the Denver Area Map App
 Once all the requirements listed above are installed and you have downloaded or cloned a copy of the App there's one last step.
 
-### Install Bower Components 
+### Install Bower Components
 Using a terminal or command prompt change into the **DenverAreaMap** directory and run command:
 
     bower install
